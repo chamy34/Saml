@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/produit-service-saml" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/produit-service/pom.xml" />
+        <option value="$PROJECT_DIR$/achteur-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Discovery-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Gateway-service/pom.xml" />
+        <option value="$PROJECT_DIR$/discovery-service/pom.xml" />
+        <option value="$PROJECT_DIR$/config-service/pom.xml" />
+        <option value="$PROJECT_DIR$/vente-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Server-vente/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/Discovery-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Server-vente/pom.xml" />
+        <option value="$PROJECT_DIR$/produit-service/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_18" default="true" project-jdk-name="18" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

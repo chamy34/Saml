@@ -1,0 +1,99 @@
+services:
+  discovery-service:
+    build: ./discovery-service
+    container_name: discovery-service
+    ports:
+      - '8761:8761'
+    expose:
+      - '8761'
+    healthcheck:
+      test: [ "CMD","curl","-f", "http://localhost:8761/actuator/health" ]
+      interval:  10s
+      retries:  4
+
+  config-service:
+    build: ./config-service
+    container_name: config-service
+    ports:
+      - '9999:9999'
+    expose:
+      - '9999'
+    healthcheck:
+      test: [ "CMD","curl","-f", "http://localhost:9999/actuator/health" ]
+      interval: 10s
+      retries: 4
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+
+  produit-service:
+    build: ./produit-service
+    container_name: produit-service
+    ports:
+      - '8082:8082'
+    expose:
+      - '8082'
+    healthcheck:
+      test: [ "CMD","curl","-f", "http://localhost:8082/actuator/health" ]
+      interval: 10s
+      retries: 4
+    environment:
+      - DISCOVERY_SERVICE_URL = http://discovery-service:8761/eureka
+      - CONFIG_SERVICE_URL=http://config-service:9999
+    depends_on:
+      config-service:
+        condition:
+          service_healthy
+
+  achteur-service:
+    build: ./achteur-service
+    container_name: achteur-service
+    ports:
+      - '8085:8085'
+    expose:
+      - '8085'
+    healthcheck:
+      test: [ "CMD","curl","-f", "http://localhost:8085/actuator/health" ]
+      interval: 10s
+      retries: 4
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+      - CONFIG_SERVICE_URL=http://config-service:9999
+    depends_on:
+      dock-config-service:
+        condition: service_healthy
+
+  vente-service:
+    build: ./vente-service
+    container_name: vente-service
+    ports:
+      - '8086:8086'
+    expose:
+      - '8086'
+    healthcheck:
+      test: [ "CMD","curl","-f", "http://localhost:8086/actuator/health" ]
+      interval: 10s
+      retries: 4
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+      - CONFIG_SERVICE_URL=http://config-service:9999
+    depends_on:
+      dock-produit-service:
+        condition: service_healthy
+
+  dock-gateway-service:
+      build: ./gatewya-service
+      container_name: dock-gateway-service
+      ports:
+        - '8088:8088'
+      expose:
+        - '8088'
+      environment:
+        - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+        - CONFIG_SERVICE_URL=http://config-service:9999
+      depends_on:
+        dock-vente-service:
+          condition:
+            service_healthy
